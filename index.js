@@ -1,4 +1,5 @@
 let voices = []
+let didPopulateVoicesDropdown = false
 
 const msg = new SpeechSynthesisUtterance()
 const voicesDropdown = document.querySelector("#voices")
@@ -17,11 +18,17 @@ setVoice()
 
 function populateVoicesDropdown() {
     console.log("AY")
+    if (didPopulateVoicesDropdown) {
+        return
+    }
+    
     voices = speechSynthesis.getVoices()
 
     voicesDropdown.innerHTML = voices.reduce((voiceList, voice) => voiceList.concat(`
         <option value='${ voice.name }'>${ voice.name }</option>
     `), "")
+
+    didPopulateVoicesDropdown = true
 }
 
 function handleSpeakPress() {
